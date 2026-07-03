@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 
-const API_URL = 'http://localhost:8080/api/usuarios.php';
+const API_URL = 'http://192.168.0.105:8080/api/usuarios.php';
 
 function App() {
   const [usuarios, setUsuarios] = useState([]);
