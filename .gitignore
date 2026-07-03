@@ -1,0 +1,31 @@
+# Docker
+docker-compose.override.yml
+*.log
+
+# Backend
+backend/vendor/
+backend/.htaccess
+
+# Frontend
+frontend/node_modules/
+frontend/build/
+frontend/.env
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# Bash
+backups/
+*.sql
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

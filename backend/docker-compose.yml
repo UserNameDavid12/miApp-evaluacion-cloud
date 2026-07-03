@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  # Base de datos MariaDB
+  db:
+    image: mariadb:11
+    container_name: miApp_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123
+      MYSQL_DATABASE: bd_ventas
+      MYSQL_USER: user_api
+      MYSQL_PASSWORD: user_pass
+    ports:
+      - "3308:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./backend/database.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - miApp-network
+
+  # Backend PHP + Apache
+  backend:
+    build: ./backend
+    container_name: miApp_backend
+    ports:
+      - "8080:80"
+    volumes:
+      - ./backend:/var/www/html
+    depends_on:
+      - db
+    networks:
+      - miApp-network
+
+  # Frontend React (Node.js)
+  frontend:
+    build: ./frontend
+    container_name: miApp_frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    stdin_open: true
+    depends_on:
+      - backend
+    networks:
+      - miApp-network
+
+volumes:
+  db_data:
+
+networks:
+  miApp-network:
+    driver: bridge
